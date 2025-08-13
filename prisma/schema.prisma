@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+enum Cargo {
+  EMPLOYEE
+  ADMIN
+}
+
+generator client {
+  provider = "prisma-client-js"  
+  output = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Sala{
+  id  Int @id @default(autoincrement())
+  capacidade  Int
+  equipamentos String // "Projetor,TV,Ar-condicionado"
+  reservas Reservas[]
+}
+
+model Reservas {
+    id  Int @id @default(autoincrement())
+    salaId Int?
+    usuarioId Int?
+    sala Sala? @relation(fields: [salaId], references: [id], onDelete: Cascade)
+    Usuario Usuario? @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+    horaInicio DateTime? @default(now()) 
+    horaFim DateTime? 
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  nome String
+  senha String
+  email String @unique
+  cargo Cargo
+  salario Float
+  reservas Reservas[]
+
+}
+
+

@@ -1,8 +1,10 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post, Query } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { SalasService } from './salas.service';
 
 @Controller('salas')
 export class SalasController {
-  constructor() {}
+  constructor(private readonly salasservice: SalasService) {}
 
   @Post('/')
   createRoom() {
@@ -11,7 +13,7 @@ export class SalasController {
 
   @Get('/')
   findAllRooms() {
-    return 'lista todas as room';
+    return this.salasservice.findAll();
   }
 
   @Patch('/:id')

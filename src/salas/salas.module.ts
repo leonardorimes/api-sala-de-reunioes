@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { SalasController } from './salas.controller';
+import { SalasService } from './salas.service';
+
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  controllers: [SalasController]
+  imports: [PrismaModule],
+  controllers: [SalasController],
+  providers: [SalasService],
 })
 export class SalasModule {}

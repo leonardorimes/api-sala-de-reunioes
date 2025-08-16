@@ -1,14 +1,25 @@
-import { Controller, Delete, Get, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SalasService } from './salas.service';
+import { CreateRoomDto } from 'src/dto/create-room-dto';
 
 @Controller('salas')
 export class SalasController {
   constructor(private readonly salasservice: SalasService) {}
 
   @Post('/')
-  createRoom() {
-    return 'criando sala de reunião';
+  createRoom(@Body() createRomDto: CreateRoomDto) {
+    return this.salasservice.createRoom(createRomDto);
   }
 
   @Get('/')
@@ -17,12 +28,15 @@ export class SalasController {
   }
 
   @Patch('/:id')
-  updateRoom() {
-    return 'atualizar sala';
+  updateRoom(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() CreateRoomDto: CreateRoomDto,
+  ) {
+    return this.salasservice.updateRoom(id, CreateRoomDto);
   }
 
   @Delete('/:id')
-  deleteRoom() {
-    return 'deletar sala';
+  deleteRoom(@Param('id', ParseIntPipe) id: number) {
+    return this.salasservice.deleteRoom(id);
   }
 }

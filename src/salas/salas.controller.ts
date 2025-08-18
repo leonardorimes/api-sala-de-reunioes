@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SalasService } from './salas.service';
-import { CreateRoomDto } from 'src/dto/create-room-dto';
+import { CreateRoomDto } from './dto/create-room-dto';
 
 @Controller('salas')
 export class SalasController {

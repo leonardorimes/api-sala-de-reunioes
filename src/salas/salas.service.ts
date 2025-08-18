@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Param } from '@nestjs/common';
 import { error } from 'console';
-import { CreateRoomDto } from 'src/dto/create-room-dto';
+import { CreateRoomDto } from './dto/create-room-dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class SalasService {
   }
 
   async createRoom(createRomDto: CreateRoomDto) {
-    const user = await this.prisma.sala.create({
+    const room = await this.prisma.sala.create({
       data: {
         capacidade: createRomDto.capacidade,
         equipamentos: createRomDto.equipamentos,
@@ -29,7 +29,7 @@ export class SalasService {
         equipamentos: true,
       },
     });
-    return user;
+    return room;
   }
 
   async updateRoom(id, createRomDto: CreateRoomDto) {
